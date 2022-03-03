@@ -38,14 +38,16 @@ export default {
   methods: {
     async onSubmit () {
       this.$toast.loading({
-        duration: 1,
+        duration: 0,
         forbidClick: true,
         message: '加载中...'
       })
       try {
         const res = await login(this.user)
         this.$toast.success('登陆成功', res)
+        console.log(res)
       } catch (error) {
+        console.log(error)
         if (error.response.status === 400) {
           this.$toast.fail('登录失败，手机号或验证码错误')
         }
