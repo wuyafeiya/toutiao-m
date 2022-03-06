@@ -67,8 +67,6 @@ export default {
 
       try {
         const res = await login(this.user)
-        // this.$store.commit("up", "ck");
-        // console.log(this.$store.state.name);
         this.$store.commit('setUser', res.data.data)
         this.$toast.success('登陆成功', res)
       } catch (error) {
@@ -77,6 +75,7 @@ export default {
           this.$toast.fail('登录失败，手机号或验证码错误')
         }
       }
+      this.$router.back()
     },
 
     async onSendSms () {

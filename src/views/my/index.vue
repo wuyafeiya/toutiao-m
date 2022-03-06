@@ -4,7 +4,7 @@
     <div class="header user-info" v-if="$store.state.user">
       <div class="base-info">
         <div class="left">
-          <van-image class="avatar" src="" round fit="cover" />
+          <van-image class="avatar" round fit="cover" />
           <span class="name">用户名</span>
         </div>
         <div class="right">
@@ -33,9 +33,9 @@
     <!-- /已登录头部 -->
 
     <!-- 未登录头部 -->
-    <div class="header not-login" v-else>
+    <div class="header not-login" v-else @click="$router.push('./login')">
       <div class="login-btn">
-        <img class="mobile-img" src="~@/assets/mobile.png" alt="" />
+        <img class="mobile-img" />
         <span class="text">登录 / 注册</span>
       </div>
     </div>
@@ -53,15 +53,16 @@
       </van-grid-item>
     </van-grid>
     <!-- /宫格导航 -->
-
-    <van-cell title="消息通知" is-link />
-    <van-cell class="mb-9" title="小智同学" is-link />
-    <van-cell
-      class="logout-cell"
-      clickable
-      title="退出登录"
-      @click="onLogout"
-    />
+    <van-cell-group v-if="this.$store.state.user">
+      <van-cell title="消息通知" is-link />
+      <van-cell class="mb-9" title="小智同学" is-link />
+      <van-cell
+        class="logout-cell"
+        clickable
+        title="退出登录"
+        @click="onLogout"
+      />
+    </van-cell-group>
   </div>
 </template>
 
@@ -72,15 +73,12 @@ export default {
     onLogout () {
       this.$dialog
         .confirm({
-          title: '确认退出吗？'
+          title: '确定退出！！！'
         })
         .then(() => {
-          // on confirm
-          // 确认退出：清除登录状态（容器中的 user + 本地存储中的 user）
           this.$store.commit('setUser', null)
         })
         .catch(() => {
-          // on cancel
           console.log('取消执行这里')
         })
     }
